@@ -46,7 +46,11 @@ class AssetHostingWithMinimumSslTest < Test::Unit::TestCase
       ssl_host, 
       @asset_host.call("/stylesheets/application.css", ssl_request_from("IE"))
   end
-  
+
+  # In cases where asset tag helpers are used outside of the request cycle
+  def test_when_request_is_nil_should_not_raise_exception
+    assert_nothing_raised { @asset_host.call("/images/blank.gif", nil) }
+  end
 
   private
     def non_ssl_host
